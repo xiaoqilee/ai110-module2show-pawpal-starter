@@ -4,10 +4,19 @@
 
 **a. Initial design**
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
+My initial UML design includes four classes: Owner, Pet, Task, and Scheduler.
+
+Owner: The Owner class stores the owner's name and is responsible for managing a list of pets. 
+
+Pet: The Pet class stores a pet's name, age, breed, and associated tasks.  
+
+Task: The Task class represents a specific pet care activity and includes details such as a description, frequency, and completion status.  
+
+Scheduler: The Scheduler class is responsible for organizing and displaying tasks.
 
 **b. Design changes**
+
+Based on the AI provided feedback, the Task class was altered to include a time field. THis is helpful so that the Scheduler can sort and display tasks more effectively. 
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
