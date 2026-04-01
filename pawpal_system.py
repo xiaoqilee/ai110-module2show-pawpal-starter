@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 
 @dataclass
@@ -9,6 +9,7 @@ class Task:
     time: str          # "HH:MM" format, e.g. "08:00"
     frequency: str     # e.g. "daily", "weekly"
     completed: bool = False
+    due_date: date = field(default_factory=date.today)
 
     def set_complete(self) -> None:
         """Mark this task as completed."""
@@ -17,7 +18,7 @@ class Task:
     def __str__(self) -> str:
         """Return a human-readable summary of the task."""
         status = "Done" if self.completed else "Pending"
-        return f"[{status}] {self.description} at {self.time} ({self.frequency})"
+        return f"[{status}] {self.description} at {self.time} ({self.frequency}) — due {self.due_date}"
 
 @dataclass
 class Pet:
@@ -89,3 +90,61 @@ class Scheduler:
                 print(f"\n  {pet.name}:")
                 for task in self.sort_tasks(pending):
                     print(f"    {task}")
+
+    def sort_by_time(self, tasks):
+        """Sort tasks by time (HH:MM format) in ascending order."""
+        return sorted(tasks, key=lambda task: task.time)
+        
+    def complete_task(self, pet: Pet, task: Task) -> Task | None:
+        """Mark a task complete and schedule the next occurrence if recurring.
+
+        Uses timedelta to calculate the next due date:
+          - daily  → due_date + 1 day
+          - weekly → due_date + 7 days
+
+        Returns the newly created Task, or None if the frequency is not recurring.
+        """
+        task.set_complete()
+
+        intervals = {"daily": timedelta(days=1), "weekly": timedelta(weeks=1)}
+        delta = intervals.get(task.frequency)
+        if delta is None:
+            return None
+
+        next_task = Task(
+            description=task.description,
+            time=task.time,
+            frequency=task.frequency,
+            due_date=task.due_date + delta,
+        )
+        pet.add_task(next_task)
+        return next_task
+
+    def find_conflicts(self) -> dict:
+        """Find tasks that share the same due_date and time across all pets.
+
+        Returns a dict where each key is a (due_date, time) slot and each
+        value is the list of tasks that clash in that slot. Only slots with
+        two or more tasks are included.
+        """
+        slots = {}
+        for task in self.owner.get_tasks():
+            key = (task.due_date, task.time)
+            if key not in slots:
+                slots[key] = []
+            slots[key].append(task)
+
+        return {key: tasks for key, tasks in slots.items() if len(tasks) > 1}
+
+    def filter_tasks(self, pet_name=None, completed=None):
+        """Filter tasks by pet name and/or completion status."""
+        if pet_name is not None:
+            matched = next((p for p in self.owner.get_pets() if p.name.lower() == pet_name.lower()), None)
+            tasks = matched.tasks if matched else []
+        else:
+            tasks = self.owner.get_tasks()
+
+        if completed is not None:
+            tasks = [t for t in tasks if t.completed == completed]
+
+        return tasks

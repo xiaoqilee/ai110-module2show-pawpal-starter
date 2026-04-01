@@ -32,8 +32,7 @@ Based on the AI provided feedback, the Task class was altered to include a time 
 
 **b. Tradeoffs**
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
+One tradeoff in my scheduler is that conflict detection only checks for exact matches in due date and time. This makes the logic simple and easy to understand, but it does not detect overlapping tasks with different start times. This tradeoff is reasonable for this scenario because the project focuses on basic scheduling features rather than handling complex time ranges. Using exact matches helps to make things easier to debug while being sufficient to demo the app's core functionalities. I also chose to keep my original conflict detection code instead of using defaultdict because the original version is a little longer but easier for me to read.
 
 ---
 
