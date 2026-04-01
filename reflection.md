@@ -18,17 +18,13 @@ Scheduler: The Scheduler class is responsible for organizing and displaying task
 
 Based on the AI provided feedback, the Task class was altered to include a time field. THis is helpful so that the Scheduler can sort and display tasks more effectively. 
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
-
 ---
 
 ## 2. Scheduling Logic and Tradeoffs
 
 **a. Constraints and priorities**
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
+My scheduler considers constraints such as time, task frequency, and completion status. The tasks are organized based on their scheduled time and recurring tasks depend on their frequency. I decided that time was the most important constraint because the goal of the app is to create a clear daily schedule. Frequency and completion status are also important for keeping tasks up to date.
 
 **b. Tradeoffs**
 
@@ -40,13 +36,11 @@ One tradeoff in my scheduler is that conflict detection only checks for exact ma
 
 **a. How you used AI**
 
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
+I used AI tools like VS Code Copilot to help with tasks like design brainstorming, generating test cases, and debugging code. The most helpful prompts were ones that were more detailed in describing what I wanted the function to do, such as how to handle recurring tasks with timedelta.
 
 **b. Judgment and verification**
 
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
+One instance where I did not accept an AI suggestion as-is was when Copilot suggested using defaultdict for conflict detection. Although it made the code shorter, I chose not to use it because my original version more readable. I verified AI suggestions by using test cases and making sure the logic matched my design.
 
 ---
 
@@ -54,13 +48,11 @@ One tradeoff in my scheduler is that conflict detection only checks for exact ma
 
 **a. What you tested**
 
-- What behaviors did you test?
-- Why were these tests important?
+I tested behaviors such as task completion, adding tasks to pets, sorting tasks by time, recurring task generation, and conflict detection. These tests were important because they make up the core functionality of the scheduler. If these components are functional, a user would be able to reliably create, manage, and view their pet care tasks.
 
 **b. Confidence**
 
-- How confident are you that your scheduler works correctly?
-- What edge cases would you test next if you had more time?
+I am fairly confident that my scheduler works correctly because all 20/20 tests passed successfully. The tests cover both standard use cases and edge cases. If I had more time, I would test more scenarios such as overlapping task durations and larger numbers of concurrent tasks.
 
 ---
 
@@ -68,12 +60,12 @@ One tradeoff in my scheduler is that conflict detection only checks for exact ma
 
 **a. What went well**
 
-- What part of this project are you most satisfied with?
+The part of this project I am most satisfied with is the implementation of the scheduling logic, especially recurring tasks and conflict detection. These features made the system feel more realistic and useful.
 
 **b. What you would improve**
 
-- If you had another iteration, what would you improve or redesign?
+I would improve the scheduling logic to handle more advanced scenarios, such as overlapping task durations instead of only exact time matches. I would also adjust the UI to make it more interactive and user-friendly.
 
 **c. Key takeaway**
 
-- What is one important thing you learned about designing systems or working with AI on this project?
+One important thing I learned is that designing a system requires both planning and iteration. It was useful to first create an outline and break the project into smaller features like sorting, filtering, and conflict detection, then build them step-by-step.
