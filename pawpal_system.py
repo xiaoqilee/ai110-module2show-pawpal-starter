@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List
-from datetime import datetime, date, timedelta
-
+from datetime import date, timedelta
 
 @dataclass
 class Task:
@@ -72,13 +71,9 @@ class Scheduler:
         """Returns all incomplete tasks for today across every pet."""
         return [task for task in self.owner.get_tasks() if not task.completed]
 
-    def sort_tasks(self, tasks: List[Task]) -> List[Task]:
-        """Sorts tasks chronologically by their scheduled time."""
-        return sorted(tasks, key=lambda t: datetime.strptime(t.time, "%H:%M"))
-
     def show_schedule(self) -> None:
         """Prints a formatted, time-sorted schedule of today's pending tasks."""
-        tasks = self.sort_tasks(self.show_todays_tasks())
+        tasks = self.sort_by_time(self.show_todays_tasks())
         if not tasks:
             print(f"No pending tasks for {self.owner.name}'s pets today.")
             return
@@ -88,7 +83,7 @@ class Scheduler:
             pending = [t for t in pet.tasks if not t.completed]
             if pending:
                 print(f"\n  {pet.name}:")
-                for task in self.sort_tasks(pending):
+                for task in self.sort_by_time(pending):
                     print(f"    {task}")
 
     def sort_by_time(self, tasks):

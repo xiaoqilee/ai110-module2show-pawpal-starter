@@ -51,3 +51,11 @@ To improve PawPal+, I added smarter scheduling features:
 3. Recurring Tasks: Tasks with a frequency like "daily" or "weekly" automatically generate a new task when completed.
 4. Conflict Detection: The system detects scheduling conflicts when multiple tasks have the same due date and time.
 
+## Testing PawPal+
+
+Run the test suite using:
+python -m pytest
+
+These tests cover the core functionality of the PawPal+ system such as  task creation and completion, adding tasks to pets, and verifying that task lists update correctly. They also test the scheduling logic by making sure tasks are sorted in chronological order and do not modify the original data. Recurring task behavior is also verified and it is checked that non-recurring tasks do not create additional entries. Lastly, the tests check conflict detection by comparing outputs for tasks that occur at the same date and time and for those that do not.
+
+Based on the test case results, my confidence Level is 4.5/5 regarding the system’s reliability because all 20/20 test cases that cover both happy cases along with edge cases passed successfully. However, there may still be more complex scenarios that have not been fully tested.
